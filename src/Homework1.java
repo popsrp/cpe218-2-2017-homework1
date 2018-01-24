@@ -1,8 +1,19 @@
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.Stack;
+import java.util.Scanner;
 
 public class Homework1 {
-	public static class Tree
-	{
+
+	public static ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	public static PrintStream ps = new PrintStream(baos);
+	public static Tree puy;
+	// IMPORTANT: Save the old System.out!
+
+	// Tell Java to use your special stream
+
+
+	static class  Tree {
 		public Tree left;
 		public Tree right;
 		public Character key;
@@ -10,37 +21,40 @@ public class Homework1 {
 		{
 			key=n;
 		}
+		public String toString(){
+			return key.toString();
+		}
 	}
+
 	public static Tree trees;
 	public static Stack<Character> popy=new Stack<Character>();
 	public static void main(String[] args) {
 		// Begin of arguments input sample
-		String input="251-*32*+";
-		if (args.length > 0) {
-			 input = args[0];
-			if (input.equalsIgnoreCase("251-*32*+")) {
-				System.out.println("(2*(5-1))+(3*2)=14");
-			}
-		}
+		System.out.print("Question = ");
+		Scanner Poppied = new Scanner(System.in);
+		String input = Poppied.nextLine();
 		for (int i = 0; i < input.length(); i++) {
 			popy.add(input.charAt(i));
 		}
+		PrintStream old = System.out;
+		System.setOut(ps);
 		trees=new Tree(popy.pop());
+		puy=trees;
 		infix(trees);
 		inOrder(trees);
 		System.out.println("="+calculate(trees));
 		// TODO: Implement your project here
-
+	    TreeDemo.main(args);
 	}
 	public static void inOrder(Tree n)
 	{
 		if(n.key=='+'||n.key=='-'||n.key=='*'||n.key=='/')
 		{
-			if(n!=trees) System.out.print("(");
+			if(n!=puy) System.out.print("(");
 			inOrder(n.left);
 			System.out.print(n.key);
 			inOrder(n.right);
-			if(n!=trees) System.out.print(")");
+			if(n!=puy) System.out.print(")");
 		}else
 		{
 			System.out.print(n.key);
@@ -65,3 +79,4 @@ public class Homework1 {
 		else return Integer.parseInt(n.key.toString());
 	}
 }
+
